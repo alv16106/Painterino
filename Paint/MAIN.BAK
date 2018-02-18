@@ -1,0 +1,50 @@
+#include <dos.h>                 /* funci¢n pokeb(); */
+#include <conio.h>
+
+void modoVideo()
+{
+asm mov ax,0x04f02; // svga.
+asm mov bx,0x0103; // 800x600 y 256 colores.
+asm int 0x10; // GO
+}
+
+void quit()
+{
+asm mov ah,0x00; // Set video-mode.
+asm mov al,0x03; // Back to normal.
+asm int 0x10; // Do it.
+}
+
+void SVGASwitchBank( int banco )
+{
+asm {
+	mov ax, 4f05h
+	xor bx, bx
+	mov dx, [banco]
+	int 0x10
+    }
+}
+
+void pixel(long x, long y, unsigned char color)
+{
+unsigned int new_location
+long coor = ( y * 800L + x ); // Calculate the place in memory.
+
+int banco = (int)coor/65536L; // We cannot use all the memory at the
+flip_page(banco); // Cambiar de banco
+// Calculate the new location in the page.
+new_location = coor-(banco*65536);
+
+// Plot a pixel.
+asm mov ax,0x0A000;
+asm mov es,ax;
+asm mov al,color;
+asm mov di, new_location;
+asm mov es:[di], al;
+}
+
+void main(void) {
+  modoVideo(0x102);
+  pixel(30,30,10);
+  getch();
+}
