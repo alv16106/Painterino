@@ -78,6 +78,8 @@ void GetMousePos( int *mbutton, int *mx, int *my )
 
 void mouseShow(int x, int y) {
   int i,j;
+  x=x+2;
+  y=y+2;
   //allocates memory and returns pointer to it
   //receives size to allocate
   bufferMouse = malloc(sizeof(int) * WMouse);
@@ -100,6 +102,8 @@ void mouseShow(int x, int y) {
 // Hides mouse from screen
 void mouseHide(int x, int y) {
   int i,j;
+  x=x+2;
+  y=y+2;
   for (i=0; i < WMouse; i++) {
     for (j=0; j < HMouse; j++) {
       pixel(x+i,y+j,bufferMouse[i][j]);

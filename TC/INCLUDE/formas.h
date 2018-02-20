@@ -1,6 +1,7 @@
 #include <stdlib.h>
 
 int *portapapeles;
+int Hbuff=0, Wbuff=0;
 
 struct Nodo{
   int x;
@@ -146,24 +147,13 @@ void circulo(int xc, int yc, int r, char color)
 
 
 
-void sprayNpray(){
-  int rx = rand() % 17;
-  int ry = rand() % 17;
-  int b, x, y,s=1,x2,y2;
-  GetMousePos(&b, &x2, &y2);
-  while (s) {
-    //GetMousePos(&b, &x, &y);
-    repaintMouse(&x,&y,&b,&x2,&y2);
-    ry = rand() % 17;
-    rx = rand() % 17;
+void sprayNpray(unsigned char *color, int x, int y){
+    int ry = rand() % 17;
+    int rx = rand() % 17;
     if (x<700||y<450) {
-        pixel(x+rx-8,y+ry-8,0);
+        pixel(x+rx-8,y+ry-8,*color);
     }
     delay(4);
-    if (b==2) {
-      s=0;
-    }
-  }
 }
 
 
@@ -178,17 +168,6 @@ int poligono(int xi,int yi,char color){
       while(bf==1){
         GetMousePos(&bf, &xf, &yf);
       }
-      pixel(xi,yi,color);
-      pixel(xi+1,yi,color);
-      pixel(xi-1,yi,color);
-      pixel(xi,yi+1,color);
-      pixel(xi,yi-1,color);
-      //
-      pixel(xf,yf,color);
-      pixel(xf+1,yf,color);
-      pixel(xf-1,yf,color);
-      pixel(xf,yf+1,color);
-      pixel(xf,yf-1,color);
       //
       line(xf,yf,xi,yi,color);
       xi=xf;
@@ -223,6 +202,8 @@ void copy(int cut, int xo, int yo, int xf, int yf){
   if (yo>yf)y=yf;
   dx=abs(xf-xo);
   dy=abs(yf-yo);
+  Hbuff=dy;
+  Wbuff=dx;
   portapapeles= (int *)malloc(sizeof(int)*abs(xf-xo)*abs(yf-yo));
   if(portapapeles == NULL) {
     printf("malloc of size %d failed!\n", sizeof(int)*abs(xf-xo)*abs(yf-yo));   // could also call perror here
@@ -239,6 +220,12 @@ void copy(int cut, int xo, int yo, int xf, int yf){
   }
 }
 
-// void paste(int x, int y){
-//
-// }
+void paste(int x, int y){
+  int i,j;
+  for (i = 0; i < Wbuff; i++) {
+    for (j = 0; j < Hbuff; j++) {
+      pixel(x+i,j+y,portapapeles[j+i*Hbuff]);
+    }
+  }
+  free(portapapeles);
+}

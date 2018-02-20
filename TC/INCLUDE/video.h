@@ -112,4 +112,19 @@ void canvas(){
 		color++;
 	}
 	loadbitmap(710,20,"C:/Bitmaps/lap.bmp");
+	loadbitmap(710+45,20,"C:/Bitmaps/lap.bmp");
+	loadbitmap(710,20+45,"C:/Bitmaps/lap.bmp");
+	loadbitmap(710+45,20+45,"C:/Bitmaps/lap.bmp");
+	loadbitmap(710,20+90,"C:/Bitmaps/lap.bmp");
+	loadbitmap(710+45,20+90,"C:/Bitmaps/lap.bmp");
+	loadbitmap(710,20+135,"C:/Bitmaps/lap.bmp");
+	loadbitmap(710+45,20+135,"C:/Bitmaps/lap.bmp");
+	loadbitmap(710,20+180,"C:/Bitmaps/lap.bmp");
+	loadbitmap(710+45,20+180,"C:/Bitmaps/lap.bmp");
+	loadbitmap(710,20+225,"C:/Bitmaps/lap.bmp");
+	loadbitmap(710+45,20+225,"C:/Bitmaps/lap.bmp");
+	loadbitmap(710,20+270,"C:/Bitmaps/lap.bmp");
+	loadbitmap(710+45,20+270,"C:/Bitmaps/lap.bmp");
+	loadbitmap(710,20+315,"C:/Bitmaps/lap.bmp");
+	loadbitmap(710+45,20+315,"C:/Bitmaps/lap.bmp");
 }
