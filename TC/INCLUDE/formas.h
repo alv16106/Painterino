@@ -96,7 +96,7 @@ void line (int x0, int y0, int x1, int y1, char color)
   int err = dx + dy, e2; /* error value e_xy */
 
   for (;;){  /* loop */
-    pixel (x0,y0,color);
+    pixelFig (x0,y0,color);
     if (x0 == x1 && y0 == y1) break;
     e2 = 2 * err;
     if (e2 >= dy) { err += dy; x0 += sx; } /* e_xy+e_x > 0 */
@@ -115,14 +115,14 @@ void rectangulo(int x0, int y0, int x1, int y1, char color){
 //Dibuja los 8 puntos del circulo
 void octavo(int xc, int yc, int x, int y, char color)
 {
-    pixel(xc+x, yc+y, color);
-    pixel(xc-x, yc+y, color);
-    pixel(xc+x, yc-y, color);
-    pixel(xc-x, yc-y, color);
-    pixel(xc+y, yc+x, color);
-    pixel(xc-y, yc+x, color);
-    pixel(xc+y, yc-x, color);
-    pixel(xc-y, yc-x, color);
+    pixelFig(xc+x, yc+y, color);
+    pixelFig(xc-x, yc+y, color);
+    pixelFig(xc+x, yc-y, color);
+    pixelFig(xc-x, yc-y, color);
+    pixelFig(xc+y, yc+x, color);
+    pixelFig(xc-y, yc+x, color);
+    pixelFig(xc+y, yc-x, color);
+    pixelFig(xc-y, yc-x, color);
 }
 
 //Funcion que dibuja un circulo
@@ -159,14 +159,14 @@ void sprayNpray(unsigned char *color, int x, int y){
 
 //Hace poligonos
 int poligono(int xi,int yi,char color){
-  int term=1, xf, yf, bf,iniciox,inicioy;
+  int term=1, xf, yf, bf,iniciox,inicioy,x2,y2;
   iniciox=xi;
   inicioy=yi;
   while (term==1){
-    GetMousePos(&bf, &xf, &yf);
+    repaintMouse(&xf,&yf,&bf,&x2,&y2);
     if (bf==1){
       while(bf==1){
-        GetMousePos(&bf, &xf, &yf);
+        repaintMouse(&xf,&yf,&bf,&x2,&y2);
       }
       //
       line(xf,yf,xi,yi,color);
@@ -224,7 +224,7 @@ void paste(int x, int y){
   int i,j;
   for (i = 0; i < Wbuff; i++) {
     for (j = 0; j < Hbuff; j++) {
-      pixel(x+i,j+y,portapapeles[j+i*Hbuff]);
+      pixelFig(x+i,j+y,portapapeles[j+i*Hbuff]);
     }
   }
   free(portapapeles);

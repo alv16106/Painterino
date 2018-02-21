@@ -37,7 +37,33 @@ int putPixel(int x, int y, int grosor, unsigned char color){
 }
 
 int pixel(int x, int y, unsigned char color){
+  asm {
+    mov bx, 800
+    mov ax, y
+    mul bx
+    add ax, x
+    adc dx, 0
+    push ax
 
+    mov ax, 04f05h
+    mov bx, 0
+    int 010h
+
+    pop di
+
+    mov ax,0a000h
+    mov es,ax
+
+    mov al, [color]
+    mov [es:di], al
+  }
+return 0;
+}
+
+int pixelFig(int x, int y, unsigned char color){
+	if (x>700||y>450) {
+		return 0;
+	}
   asm {
     mov bx, 800
     mov ax, y
@@ -111,20 +137,20 @@ void canvas(){
 		}
 		color++;
 	}
-	loadbitmap(710,20,"C:/Bitmaps/lap.bmp");
-	loadbitmap(710+45,20,"C:/Bitmaps/lap.bmp");
-	loadbitmap(710,20+45,"C:/Bitmaps/lap.bmp");
-	loadbitmap(710+45,20+45,"C:/Bitmaps/lap.bmp");
-	loadbitmap(710,20+90,"C:/Bitmaps/lap.bmp");
-	loadbitmap(710+45,20+90,"C:/Bitmaps/lap.bmp");
-	loadbitmap(710,20+135,"C:/Bitmaps/lap.bmp");
-	loadbitmap(710+45,20+135,"C:/Bitmaps/lap.bmp");
-	loadbitmap(710,20+180,"C:/Bitmaps/lap.bmp");
-	loadbitmap(710+45,20+180,"C:/Bitmaps/lap.bmp");
-	loadbitmap(710,20+225,"C:/Bitmaps/lap.bmp");
-	loadbitmap(710+45,20+225,"C:/Bitmaps/lap.bmp");
-	loadbitmap(710,20+270,"C:/Bitmaps/lap.bmp");
-	loadbitmap(710+45,20+270,"C:/Bitmaps/lap.bmp");
-	loadbitmap(710,20+315,"C:/Bitmaps/lap.bmp");
-	loadbitmap(710+45,20+315,"C:/Bitmaps/lap.bmp");
+	loadbitmap(710,20,"C:/Bitmaps/lapiz.bmp");
+	loadbitmap(710+45,20,"C:/Bitmaps/spray.bmp");
+	loadbitmap(710,20+45,"C:/Bitmaps/rect.bmp");
+	loadbitmap(710+45,20+45,"C:/Bitmaps/rectFill.bmp");
+	loadbitmap(710,20+90,"C:/Bitmaps/circulo.bmp");
+	loadbitmap(710+45,20+90,"C:/Bitmaps/circulo.bmp");
+	loadbitmap(710,20+135,"C:/Bitmaps/elip.bmp");
+	loadbitmap(710+45,20+135,"C:/Bitmaps/elipFill.bmp");
+	loadbitmap(710,20+180,"C:/Bitmaps/poli.bmp");
+	loadbitmap(710+45,20+180,"C:/Bitmaps/poliFill.bmp");
+	loadbitmap(710,20+225,"C:/Bitmaps/line.bmp");
+	loadbitmap(710+45,20+225,"C:/Bitmaps/quit.bmp");
+	loadbitmap(710,20+270,"C:/Bitmaps/cut.bmp");
+	loadbitmap(710+45,20+270,"C:/Bitmaps/copy.bmp");
+	loadbitmap(710,20+315,"C:/Bitmaps/paste.bmp");
+	loadbitmap(710+45,20+315,"C:/Bitmaps/borrador.bmp");
 }

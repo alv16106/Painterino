@@ -51,7 +51,7 @@ void mouse_limit(){
 	asm{
 		mov ax, 7;
 		mov cx, 0;
-		mov dx, 800;
+		mov dx, 795;
 		int 0x33;
 		mov ax, 8;
 		mov cx, 0;
