@@ -1,5 +1,9 @@
+/*Universidad del Valle de Guatemala
+Rodrigo Alvarado - 16106
+Libreria grafica desarrollada en C
+21/02/2017*/
 
-
+//Empieza el modo de video
 void modoVideo()
 {
 	asm{
@@ -9,6 +13,7 @@ void modoVideo()
 	}
 }
 
+//Sale al modo texto
 void quit()
 {
 	asm{
@@ -18,6 +23,7 @@ void quit()
 	}
 }
 
+//Cambia de banco
 void flip( int banco )
 {
 	asm {
@@ -28,6 +34,7 @@ void flip( int banco )
   }
 }
 
+//Pone un pixel de un grosor determinado
 int putPixel(int x, int y, int grosor, unsigned char color){
 	int i;
 	for (i = 0; i < grosor; i++) {
@@ -36,6 +43,7 @@ int putPixel(int x, int y, int grosor, unsigned char color){
 	return 0;
 }
 
+//Pone un pixel grosor 1
 int pixel(int x, int y, unsigned char color){
   asm {
     mov bx, 800
@@ -60,7 +68,9 @@ int pixel(int x, int y, unsigned char color){
 return 0;
 }
 
+//Pone un pixel que no sale del canvas
 int pixelFig(int x, int y, unsigned char color){
+	//Esta en el canvas?
 	if (x>700||y>450) {
 		return 0;
 	}
@@ -87,6 +97,8 @@ int pixelFig(int x, int y, unsigned char color){
 return 0;
 }
 
+//Recibe cordenadas x y y
+//Devuelve el color del canvas en esas coordenadas
 char getpixel(int x, int y){
 	char color;
   asm {
@@ -112,6 +124,7 @@ char getpixel(int x, int y){
 	return color;
 }
 
+//Pinta el canvas y carga los bitmaps
 void canvas(){
 	int i,j,color,h;
 	color=0;
@@ -142,15 +155,27 @@ void canvas(){
 	loadbitmap(710,20+45,"C:/Bitmaps/rect.bmp");
 	loadbitmap(710+45,20+45,"C:/Bitmaps/rectFill.bmp");
 	loadbitmap(710,20+90,"C:/Bitmaps/circulo.bmp");
-	loadbitmap(710+45,20+90,"C:/Bitmaps/circulo.bmp");
+	loadbitmap(710+45,20+90,"C:/Bitmaps/circF.bmp");
 	loadbitmap(710,20+135,"C:/Bitmaps/elip.bmp");
 	loadbitmap(710+45,20+135,"C:/Bitmaps/elipFill.bmp");
 	loadbitmap(710,20+180,"C:/Bitmaps/poli.bmp");
 	loadbitmap(710+45,20+180,"C:/Bitmaps/poliFill.bmp");
 	loadbitmap(710,20+225,"C:/Bitmaps/line.bmp");
-	loadbitmap(710+45,20+225,"C:/Bitmaps/quit.bmp");
-	loadbitmap(710,20+270,"C:/Bitmaps/cut.bmp");
-	loadbitmap(710+45,20+270,"C:/Bitmaps/copy.bmp");
-	loadbitmap(710,20+315,"C:/Bitmaps/paste.bmp");
-	loadbitmap(710+45,20+315,"C:/Bitmaps/borrador.bmp");
+	loadbitmap(710+45,20+225,"C:/Bitmaps/cut.bmp");
+	loadbitmap(710,20+270,"C:/Bitmaps/copy.bmp");
+	loadbitmap(710+45,20+270,"C:/Bitmaps/paste.bmp");
+	loadbitmap(710,20+315,"C:/Bitmaps/borrador.bmp");
+	loadbitmap(710+45,20+315,"C:/Bitmaps/bucket.bmp");
+	loadbitmap(710,20+360,"C:/Bitmaps/quit.bmp");
+	loadbitmap(710+45,20+360,"C:/Bitmaps/quit.bmp");
+}
+
+//Limpia el canvas
+void nuevo() {
+	int i,j;
+	for (i=0;i<700;i++){
+		for(j=0;j<450;j++){
+			pixel(i,j,15);
+		}
+	}
 }

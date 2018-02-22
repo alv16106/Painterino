@@ -1,3 +1,8 @@
+/*Universidad del Valle de Guatemala
+Rodrigo Alvarado - 16106
+Libreria de carga y guardado de bitmaps desarrollada en C
+21/02/2017*/
+
 int loadbitmap(int offX, int offY,char *archivo)
 {
    FILE *ptr=NULL;                //file handle to open bitmap file

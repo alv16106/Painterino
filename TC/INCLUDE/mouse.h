@@ -1,5 +1,10 @@
 #include <stdlib.h>
 
+/*Universidad del Valle de Guatemala
+Rodrigo Alvarado - 16106
+Libreria para control del mouse desarrollada en C
+21/02/2017*/
+
 //Tama;o del mouse
 #define WMouse 12
 #define HMouse 16

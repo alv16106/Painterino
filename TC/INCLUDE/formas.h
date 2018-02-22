@@ -1,5 +1,10 @@
 #include <stdlib.h>
 
+/*Universidad del Valle de Guatemala
+Rodrigo Alvarado - 16106
+Libreria grafica de figuras geometricas desarrollada en C
+21/02/2017*/
+
 int *portapapeles;
 int Hbuff=0, Wbuff=0;
 
@@ -145,15 +150,65 @@ void circulo(int xc, int yc, int r, char color)
     }
 }
 
+//Elipse
+void Elipse(int xc, int yc, int rx, int ry, char color) {
+  int x,y;
+  float p1,p2;
+  x=0;
+	y=ry;
+	cuarto(xc,x,yc,y,color);
+	p1=(ry*ry)-(rx*rx*ry)+(rx*rx)/4;
+	while((2.0*ry*ry*x)<=(2.0*rx*rx*y))
+	{
+		x++;
+		if(p1<=0)
+			p1=p1+(2.0*ry*ry*x)+(ry*ry);
+		else
+		{
+			y--;
+			p1=p1+(2.0*ry*ry*x)-(2.0*rx*rx*y)+(ry*ry);
+		}
+		cuarto(xc,x,yc,y,color);
+		x=-x;
+		cuarto(xc,x,yc,y,color);
+		x=-x;
+	}
+	x=rx;
+	y=0;
+	cuarto(xc,x,yc,y,color);
+	p2=(rx*rx)+2.0*(ry*ry*rx)+(ry*ry)/4;
+	while((2.0*ry*ry*x)>(2.0*rx*rx*y))
+	{
+		y++;
+		if(p2>0)
+			p2=p2+(rx*rx)-(2.0*rx*rx*y);
+		else
+		{
+			x--;
+			p2=p2+(2.0*ry*ry*x)-(2.0*rx*rx*y)+(rx*rx);
+		}
+		cuarto(xc,x,yc,y,color);
+		y=-y;
+		cuarto(xc,x,yc,y,color);
+		y=-y;
+	}
+}
 
+int cuarto(int xc, int x, int yc, int y, char color) {
+  pixel(xc+x,yc+y,color);
+  pixel(xc-x,yc+y,color);
+  pixel(xc+x,yc-y,color);
+  pixel(xc-x,yc-y,color);
+  return 0;
+}
 
-void sprayNpray(unsigned char *color, int x, int y){
+void sprayNpray(unsigned char *color, int x, int y, int d){
     int ry = rand() % 17;
     int rx = rand() % 17;
     if (x<700||y<450) {
         pixel(x+rx-8,y+ry-8,*color);
     }
-    delay(4);
+    delay(4-d);
 }
 
 
@@ -189,7 +244,7 @@ int swap(int *xp, int *yp)
     return 0;
 }
 
-void copy(int cut, int xo, int yo, int xf, int yf){
+void copy(int xo, int yo, int xf, int yf){
   int i,j,x,y,dx,dy;
   if(xo>700)xo=700;
   if(xf>700)xf=700;
@@ -206,16 +261,13 @@ void copy(int cut, int xo, int yo, int xf, int yf){
   Wbuff=dx;
   portapapeles= (int *)malloc(sizeof(int)*abs(xf-xo)*abs(yf-yo));
   if(portapapeles == NULL) {
-    printf("malloc of size %d failed!\n", sizeof(int)*abs(xf-xo)*abs(yf-yo));   // could also call perror here
-    exit(1);   // or return an error to caller
+    printf("malloc of size %d failed!\n", sizeof(int)*abs(xf-xo)*abs(yf-yo));
+    exit(1);
   }
 
   for (i = 0; i < dx; i++) {
     for (j = 0; j < dy; j++) {
       portapapeles[j+i*dy]=getpixel(x+i,y+j);
-      if (cut) {
-        pixel(x+i,y+i,15);
-      }
     }
   }
 }

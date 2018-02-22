@@ -1,3 +1,8 @@
+/*Universidad del Valle de Guatemala
+Rodrigo Alvarado - 16106
+Programa de dibujo libre desarrollado en C
+21/02/2017*/
+
 #include <dos.h>
 #include <stdlib.h>
 #include <conio.h>
@@ -11,7 +16,7 @@
 
 void main() {
 	unsigned char color;
-	int x, y, x1, y1, b, s=1, f=1, term, xtemp, ytemp;
+	int x, y, x1, y1, b, s=1, f=1, term, xtemp, ytemp,g=3;
 	color = 0;
 	modoVideo();
 	get_mouse();
@@ -36,7 +41,16 @@ void main() {
 			if(x>710+45&&x<710+80&&y>20+180&&y<20+215)f=10;
 			//
 			if(x>710&&x<710+35&&y>20+225&&y<20+260)f=11;
-			if(x>710+45&&x<710+80&&y>20+225&&y<20+260)s=0;
+			if(x>710+45&&x<710+80&&y>20+225&&y<20+260)f=12;
+			//
+			if(x>710&&x<710+35&&y>20+225+45&&y<20+260+45)f=13;
+			if(x>710+45&&x<710+80&&y>20+225+45&&y<20+260+45)f=14;
+			//
+			if(x>710&&x<710+35&&y>20+225+90&&y<20+260+90)f=15;
+			if(x>710+45&&x<710+80&&y>20+225+90&&y<20+260+90)f=16;
+			//
+			if(x>710&&x<710+35&&y>20+225+135&&y<20+260+135)f=17;
+			if(x>710+45&&x<710+80&&y>20+225+135&&y<20+260+135)s=0;
 
 			//Si esta en el canvas
 			if (x<700&&y<450) {
@@ -51,7 +65,7 @@ void main() {
 					break;
 					//spray
 					case 2:
-					sprayNpray(&color, x, y);
+					sprayNpray(&color, x, y, g);
 					break;
 					//rectangulo
 					case 3:
@@ -93,9 +107,22 @@ void main() {
 					break;
 					//Elipse
 					case 7:
+					xtemp = x;
+					ytemp = y;
+					while (b==1) {
+						repaintMouse(&x,&y,&b,&x1,&y1);
+					}
+					Elipse(xtemp, ytemp,abs(x-xtemp),abs(y-ytemp),color);
 					break;
 					//Elipse llena
 					case 8:
+					xtemp = x;
+					ytemp = y;
+					while (b==1) {
+						repaintMouse(&x,&y,&b,&x1,&y1);
+					}
+					Elipse(xtemp, ytemp,abs(x-xtemp),abs(y-ytemp),color);
+					floodFill(xtemp, ytemp,getpixel(xtemp,ytemp),color);
 					break;
 					//Poligono
 					case 9:
@@ -120,7 +147,7 @@ void main() {
 					while (b==1) {
 						repaintMouse(&x,&y,&b,&x1,&y1);
 					}
-					copy(1,xtemp,ytemp,x,y);
+					copy(xtemp,ytemp,x,y);
 					break;
 					//copy
 					case 13:
@@ -129,20 +156,37 @@ void main() {
 					while (b==1) {
 						repaintMouse(&x,&y,&b,&x1,&y1);
 					}
-					copy(0,xtemp,ytemp,x,y);
+					copy(xtemp,ytemp,x,y);
 					break;
 					//paste
 					case 14:
 					while (b==1) {
 						repaintMouse(&x,&y,&b,&x1,&y1);
 					}
+					mouseHide(x,y);
 					paste(x,y);
+					mouseShow(x,y);
 					break;
 					//borrador
 					case 15:
 					break;
-					//Marcador
+					//Fill
 					case 16:
+					while (b==1) {
+						repaintMouse(&x,&y,&b,&x1,&y1);
+					}
+					mouseHide(x,y);
+					floodFill(x,y,getpixel(x,y),color);
+					mouseShow(x,y);
+					break;
+					//Marcador
+					case 17:
+					break;
+					//Abrir
+					case 18:
+					break;
+					//Guardar
+					case 19:
 					break;
 				}
 			}
