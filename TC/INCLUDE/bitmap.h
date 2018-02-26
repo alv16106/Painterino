@@ -12,7 +12,7 @@ int loadbitmap(int offX, int offY,char *archivo)
    int ch,ch1,ch2;
    ptr=fopen(archivo,"rb");      //open the bitmap file
    if(!ptr){
-     line(15,15,300,200,0);
+     line(15,15,300,200,0,1);
      return 0;
    }             //if its not there return
    width=0;height=0;              //initialise wisth and height to zero
@@ -90,4 +90,69 @@ int getcol(int col)
       case 15:return 15;    //WHITE;
    }
    return col;
+}
+
+void set_palette(char far *palette){
+  asm {
+    les dx, [palette]
+    mov ax, 0x1012
+    mov bx, 0
+    mov cx, 256
+    int 0x10
+  }
+}
+
+
+void guardar_imagen(int x, int y, int xmax, int height, char file[]){
+  FILE * fileSave;
+  int count, i, j, tempi;
+  unsigned char pixel, ch;
+  unsigned long headerBuf[13];
+  long palette[256];
+  char headerInfo[2] = "BM";
+  //opens file
+  fileSave = fopen(file, "wb");
+  fwrite(headerInfo, sizeof(headerInfo[0]), 2, fileSave);
+  x--; y--;                                   //improve file image at save
+  headerBuf[0] = xmax * height + 1024 + 54;  //size
+  headerBuf[1] = 0;                           // reserved
+  headerBuf[2] = 1024 + 54;                   // offset
+  headerBuf[3] = 40;                          // size header
+  //ancho de la imagen
+  headerBuf[4] = xmax;
+  headerBuf[5] = height;                      // height
+  headerBuf[6] = 0x80001;                     // planes
+  headerBuf[7] = 0;                           // compression
+  headerBuf[8] = xmax*height;                // actual size
+  headerBuf[9] = 0;
+  headerBuf[10] = 0;
+  headerBuf[11] = 256;                          // colors
+  headerBuf[12] = 256;                          // important colors
+  fwrite(headerBuf, sizeof(headerBuf[0]), 13,  fileSave);
+  set_palette(palette);
+  palette[0] = 0;
+  palette[1] = 0x8;
+  palette[2] = 0x800;
+  palette[3] = 0x808;
+  palette[4] = 0x80000;
+  palette[5] = 0x80008;
+  palette[6] = 0x80400;
+  palette[7] = 0xC0C0C;
+  palette[8] = 0x80808;
+  palette[9] = 0xFF;
+  palette[10] = 0xFF00;
+  palette[11] = 0xFFFF;
+  palette[12] = 0xFF0000;
+  palette[13] = 0xFF00FF;
+  palette[14] = 0xFFFF00;
+  palette[15] = 0xFFFFFF;
+  fwrite(palette, sizeof(long), 255,  fileSave);
+
+  for(j=(y+height); j>=y; j--){
+    for(i=x; i<=(xmax+x)-1; i++){
+     pixel=getpixel(i, j);
+     fwrite(&pixel,1,1, fileSave);
+    }
+  }
+  fclose( fileSave);
 }

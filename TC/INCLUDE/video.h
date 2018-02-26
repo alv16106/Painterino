@@ -38,7 +38,10 @@ void flip( int banco )
 int putPixel(int x, int y, int grosor, unsigned char color){
 	int i;
 	for (i = 0; i < grosor; i++) {
-		pixel(x+i,y+i,color);
+		pixelFig(x,y+i,color);
+		pixelFig(x+i,y,color);
+		pixelFig(x,y-i,color);
+		pixelFig(x-i,y,color);
 	}
 	return 0;
 }
@@ -135,18 +138,47 @@ void canvas(){
 	}
 	for (i=700;i<800;i++){
 		for(j=0;j<600;j++){
-			pixel(i,j,8);
+			pixel(i,j,0);
 		}
 	}
 
 	//COlores
-	for (i=0;i<700;i+=5){
-		for(j=450;j<600;j++){
+	for (i=0;i<700;i+=15){
+		for(j=467;j<517;j++){
 			pixel(i,j,color);
 			pixel(i+1,j,color);
 			pixel(i+2,j,color);
 			pixel(i+3,j,color);
 			pixel(i+4,j,color);
+			pixel(i+5,j,color);
+			pixel(i+6,j,color);
+			pixel(i+7,j,color);
+			pixel(i+8,j,color);
+			pixel(i+9,j,color);
+			pixel(i+10,j,color);
+			pixel(i+11,j,color);
+			pixel(i+12,j,color);
+			pixel(i+13,j,color);
+		}
+		color++;
+	}
+
+	for (i=0;i<700;i+=15){
+		for(j=533;j<583;j++){
+			pixel(i,j,color);
+			pixel(i+1,j,color);
+			pixel(i+2,j,color);
+			pixel(i+3,j,color);
+			pixel(i+4,j,color);
+			pixel(i+5,j,color);
+			pixel(i+6,j,color);
+			pixel(i+7,j,color);
+			pixel(i+8,j,color);
+			pixel(i+9,j,color);
+			pixel(i+10,j,color);
+			pixel(i+11,j,color);
+			pixel(i+12,j,color);
+			pixel(i+13,j,color);
 		}
 		color++;
 	}
