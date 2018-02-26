@@ -74,7 +74,7 @@ return 0;
 //Pone un pixel que no sale del canvas
 int pixelFig(int x, int y, unsigned char color){
 	//Esta en el canvas?
-	if (x>700||y>450) {
+	if (x>700||y>450||x<0||y<0) {
 		return 0;
 	}
   asm {
@@ -198,8 +198,12 @@ void canvas(){
 	loadbitmap(710+45,20+270,"C:/Bitmaps/paste.bmp");
 	loadbitmap(710,20+315,"C:/Bitmaps/borrador.bmp");
 	loadbitmap(710+45,20+315,"C:/Bitmaps/bucket.bmp");
-	loadbitmap(710,20+360,"C:/Bitmaps/quit.bmp");
+	loadbitmap(710,20+360,"C:/Bitmaps/marcador.bmp");
 	loadbitmap(710+45,20+360,"C:/Bitmaps/quit.bmp");
+	loadbitmap(710,20+45+360,"C:/Bitmaps/save.bmp");
+	loadbitmap(710+45,20+45+360,"C:/Bitmaps/new.bmp");
+	loadbitmap(710,20+45+45+360,"C:/Bitmaps/grosor.bmp");
+
 }
 
 //Limpia el canvas

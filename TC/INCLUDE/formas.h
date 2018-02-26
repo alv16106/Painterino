@@ -10,7 +10,8 @@ Libreria grafica de figuras geometricas desarrollada en C
 #define Wpat 12
 #define Hpat 16
 
-int an,la,rx,ry;
+int an,la,rx,ry,i;
+static unsigned char p[Wpat*Hpat];
 static unsigned char pat[Wpat * Hpat] =
 {
   O,O,O,0,0,0,0,0,0,0,0,0,
@@ -80,8 +81,23 @@ struct Nodo{
 //Llena una figura
 void floodFill(int x, int y, int oldclr, int newclr,int patron)
 {
-    int nx,ny;
-    struct Nodo* first, *last, *tmp;
+  int nx,ny;
+  struct Nodo* first, *last, *tmp;
+    if (patron==1){
+      for (i = 0; i < 192; i++) {
+        p[i]=pat[i];
+      }
+    }
+    if (patron==2){
+      for (i = 0; i < 192; i++) {
+        p[i]=pat2[i];
+      }
+    }
+    if (patron==3){
+      for (i = 0; i < 192; i++) {
+        p[i]=pat3[i];
+      }
+    }
 
     first = (struct Nodo*) malloc (sizeof (struct Nodo));
     if (first == NULL)
@@ -105,18 +121,18 @@ void floodFill(int x, int y, int oldclr, int newclr,int patron)
     {
       nx=x%12;
       ny=y%16;
-      if(patron){
-        pixel(x,y,pat[ny*12+nx]);
+      if(patron!=0){
+        pixel(x,y,p[ny*12+nx]);
       }else{
         pixel (x, y, newclr);
       }
 
       if (getpixel (x, y-1) == oldclr)
       {
-        if (patron) {
+        if (patron!=0) {
           nx=x%12;
           ny=(y-1)%16;
-          pixel(x,y-1,pat[ny*12+nx]);
+          pixel(x,y-1,p[ny*12+nx]);
         }else{
           pixel (x, y-1, newclr);
         }
@@ -126,10 +142,10 @@ void floodFill(int x, int y, int oldclr, int newclr,int patron)
 
       if (getpixel (x, y+1) == oldclr)
       {
-        if (patron) {
+        if (patron!=0) {
           nx=x%12;
           ny=(y+1)%16;
-          pixel(x,y+1,pat[ny*12+nx]);
+          pixel(x,y+1,p[ny*12+nx]);
         }else{
           pixel (x, y+1, newclr);
         }
@@ -138,10 +154,10 @@ void floodFill(int x, int y, int oldclr, int newclr,int patron)
 
       if (getpixel (x-1, y) == oldclr)
       {
-        if (patron) {
+        if (patron!=0) {
           nx=(x-1)%12;
           ny=y%16;
-          pixel(x-1,y,pat[ny*12+nx]);
+          pixel(x-1,y,p[ny*12+nx]);
         }else{
           pixel (x-1, y, newclr);
         }
@@ -150,10 +166,10 @@ void floodFill(int x, int y, int oldclr, int newclr,int patron)
 
       if (getpixel (x+1, y) == oldclr)
       {
-        if (patron) {
+        if (patron!=0) {
           nx=(x+1)%12;
           ny=y%16;
-          pixel(x+1,y,pat[ny*12+nx]);
+          pixel(x+1,y,p[ny*12+nx]);
         }else{
           pixel (x+1, y, newclr);
         }

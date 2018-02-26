@@ -16,7 +16,7 @@ Programa de dibujo libre desarrollado en C
 
 void main() {
 	unsigned char color;
-	int x, y, x1, y1, b, s=1, f=1, term=1, xtemp, ytemp,g=2,i,j,iniciox,inicioy;
+	int x, y, x1, y1, b, s=1, f=1, term=1, xtemp, ytemp,g=2,i,j,iniciox,inicioy,p=0;
 	color = 0;
 	modoVideo();
 	get_mouse();
@@ -53,6 +53,19 @@ void main() {
 			//
 			if(x>710&&x<710+35&&y>20+225+135&&y<20+260+135)f=17;
 			if(x>710+45&&x<710+80&&y>20+225+135&&y<20+260+135)s=0;
+			//
+			if(x>710&&x<710+35&&y>20+225+135+45&&y<45+20+260+135)f=18;
+			if(x>710+45&&x<710+80&&y>20+225+135+45&&y<45+20+260+135)nuevo();
+			//
+			if(x>710&&x<710+35&&y>20+225+135+45+45&&y<45+20+260+45+135)f=20;
+			if(x>710+45&&x<710+80&&y>20+225+135+45+45&&y<45+20+260+45+135){
+				while (b==1) {
+					repaintMouse(&x,&y,&b,&x1,&y1);
+				}
+				p++;
+				if(p>3) p=0;
+				//rectangulo();
+			}
 
 			//Si esta en el canvas
 			if (x<700&&y<450) {
@@ -219,21 +232,24 @@ void main() {
 					case 17:
 					sprayNpray(color, x, y,g,1);
 					break;
-					//Abrir
+					//Guardar
 					case 18:
 					break;
-					//Guardar
+					//Nuevo
 					case 19:
 					break;
-					//New
+					//Abrir
 					case 20:
+					break;
+					//Patrones
+					case 21:
 					break;
 				}
 			}
 		}else if (b==2) {
 			color=getpixel(x,y);
 			for (i=730;i<770;i++){
-				for(j=500;j<540;j++){
+				for(j=570;j<590;j++){
 					pixel(i,j,color);
 				}
 			}
