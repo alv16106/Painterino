@@ -5,8 +5,9 @@ Rodrigo Alvarado - 16106
 Libreria grafica de figuras geometricas desarrollada en C
 21/02/2017*/
 
-#define O 10
+#define Q 12
 #define I 255
+#define Z 3
 #define Wpat 12
 #define Hpat 16
 
@@ -14,56 +15,56 @@ int an,la,rx,ry,i;
 static unsigned char p[Wpat*Hpat];
 static unsigned char pat[Wpat * Hpat] =
 {
-  O,O,O,0,0,0,0,0,0,0,0,0,
-  O,O,O,O,0,0,0,0,0,0,0,0,
-  O,O,I,O,O,0,0,0,0,0,0,0,
-  O,O,I,I,O,O,0,0,0,0,0,0,
-  O,O,I,I,I,O,O,0,0,0,0,0,
-  O,O,I,I,I,I,O,O,0,0,0,0,
-  O,O,I,I,I,I,I,O,O,0,0,0,
-  O,O,I,I,I,I,I,I,O,O,0,0,
-  O,O,I,I,I,I,I,I,I,O,O,0,
-  O,O,I,I,I,I,I,I,I,I,O,O,
-  O,O,I,I,I,I,I,I,O,O,O,O,
-  O,O,I,I,I,I,I,I,O,O,0,0,
-  O,O,O,O,O,O,I,I,O,O,0,0,
-  O,O,O,O,O,O,I,I,I,O,0,0,
-  0,0,0,0,O,O,O,I,I,O,0,0,
-  0,0,0,0,0,O,O,O,O,O,0,0
+  Q,Q,Q,Z,Z,Z,Z,Z,Z,Z,Z,Z,
+  Q,Q,Q,Q,Z,Z,Z,Z,Z,Z,Z,Z,
+  Q,Q,I,Q,Q,Z,Z,Z,Z,Z,Z,Z,
+  Q,Q,I,I,Q,Q,Z,Z,Z,Z,Z,Z,
+  Q,Q,I,I,I,Q,Q,Z,Z,Z,Z,Z,
+  Q,Q,I,I,I,I,Q,Q,Z,Z,Z,Z,
+  Q,Q,I,I,I,I,I,Q,Q,Z,Z,Z,
+  Q,Q,I,I,I,I,I,I,Q,Q,Z,Z,
+  Q,Q,I,I,I,I,I,I,I,Q,Q,Z,
+  Q,Q,I,I,I,I,I,I,I,I,Q,Q,
+  Q,Q,I,I,I,I,I,I,Q,Q,Q,Q,
+  Q,Q,I,I,I,I,I,I,Q,Q,Z,Z,
+  Q,Q,Q,Q,Q,Q,I,I,Q,Q,Z,Z,
+  Q,Q,Q,Q,Q,Q,I,I,I,Q,Z,Z,
+  Z,Z,Z,Z,Q,Q,Q,I,I,Q,Z,Z,
+  Z,Z,Z,Z,Z,Q,Q,Q,Q,Q,Z,Z
 };
 static unsigned char pat2[Wpat * Hpat] =
 {
-  O,O,O,0,0,0,O,O,O,0,0,0,
-  O,O,O,0,0,0,O,O,O,0,0,0,
-  O,O,O,0,0,0,O,O,O,0,0,0,
-  0,0,0,O,O,O,0,0,0,O,O,O,
-  0,0,0,O,O,O,0,0,0,O,O,O,
-  0,0,0,O,O,O,0,0,0,O,O,O,
-  O,O,O,0,0,0,O,O,O,0,0,0,
-  O,O,O,0,0,0,O,O,O,0,0,0,
-  O,O,O,0,0,0,O,O,O,0,0,0,
-  0,0,0,O,O,O,0,0,0,O,O,O,
-  0,0,0,O,O,O,0,0,0,O,O,O,
-  0,0,0,O,O,O,0,0,0,O,O,O,
-  O,O,O,0,0,0,O,O,O,0,0,0,
-  O,O,O,0,0,0,O,O,O,0,0,0,
-  O,O,O,0,0,0,O,O,O,0,0,0,
-  I,I,I,I,I,I,I,I,I,I,I,I
+  Q,Q,Q,Q,Q,Q,Z,Z,Z,Z,Z,Z,
+  Q,Q,Q,Q,Q,Q,Z,Z,Z,Z,Z,Z,
+  Q,Q,Q,Q,Q,Q,Z,Z,Z,Z,Z,Z,
+  Q,Q,Q,Q,Q,Q,Z,Z,Z,Z,Z,Z,
+  Q,Q,Q,Q,Q,Q,Z,Z,Z,Z,Z,Z,
+  Q,Q,Q,Q,Q,Q,Z,Z,Z,Z,Z,Z,
+  Q,Q,Q,Q,Q,Q,Z,Z,Z,Z,Z,Z,
+  Q,Q,Q,Q,Q,Q,Z,Z,Z,Z,Z,Z,
+  Z,Z,Z,Z,Z,Z,Q,Q,Q,Q,Q,Q,
+  Z,Z,Z,Z,Z,Z,Q,Q,Q,Q,Q,Q,
+  Z,Z,Z,Z,Z,Z,Q,Q,Q,Q,Q,Q,
+  Z,Z,Z,Z,Z,Z,Q,Q,Q,Q,Q,Q,
+  Z,Z,Z,Z,Z,Z,Q,Q,Q,Q,Q,Q,
+  Z,Z,Z,Z,Z,Z,Q,Q,Q,Q,Q,Q,
+  Z,Z,Z,Z,Z,Z,Q,Q,Q,Q,Q,Q,
+  Z,Z,Z,Z,Z,Z,Q,Q,Q,Q,Q,Q,
 };
 static unsigned char pat3[Wpat * Hpat] =
 {
-  O,O,O,0,0,0,0,0,0,O,O,O,
-  O,O,O,O,0,0,0,0,O,O,O,O,
-  O,O,O,O,O,0,0,O,O,O,O,O,
-  O,O,O,O,O,O,O,O,O,O,O,O,
-  I,I,I,I,I,I,I,I,I,I,I,I,
-  I,I,I,I,I,I,I,I,I,I,I,I,
-  I,I,I,I,I,I,I,I,I,I,I,I,
-  I,I,I,I,I,I,I,I,I,I,I,I,
-  O,O,O,0,0,0,0,0,0,O,O,O,
-  O,O,O,O,0,0,0,0,O,O,O,O,
-  O,O,O,O,O,0,0,O,O,O,O,O,
-  O,O,O,O,O,O,O,O,O,O,O,O,
+  Q,Q,Q,Q,Q,Z,Z,Q,Q,Q,Q,Q,
+  Q,Q,Q,Q,Z,Z,Z,Z,Q,Q,Q,Q,
+  Q,Q,Q,Z,Z,Z,Z,Z,Z,Q,Q,Q,
+  Q,Q,Z,Z,Z,Z,Z,Z,Z,Z,Q,Q,
+  Q,Z,Z,Z,Z,Z,Z,Z,Z,Z,Z,Q,
+  Z,Z,Z,Z,Z,Z,Z,Z,Z,Z,Z,Z,
+  Q,Z,Z,Z,Z,Z,Z,Z,Z,Z,Z,Q,
+  Q,Q,Z,Z,Z,Z,Z,Z,Z,Z,Q,Q,
+  Q,Q,Q,Z,Z,Z,Z,Z,Z,Q,Q,Q,
+  Q,Q,Q,Q,Z,Z,Z,Z,Q,Q,Q,Q,
+  Q,Q,Q,Q,Q,Z,Z,Q,Q,Q,Q,Q,
+  Q,Q,Q,Q,Q,Q,Q,Q,Q,Q,Q,O,
   I,I,I,I,I,I,I,I,I,I,I,I,
   I,I,I,I,I,I,I,I,I,I,I,I,
   I,I,I,I,I,I,I,I,I,I,I,I,
@@ -405,4 +406,109 @@ void paste(int x, int y){
     }
   }
   free(portapapeles);
+}
+
+void floodFill2(int x, int y, int oldclr, int newclr,int patron)
+{
+  int nx,ny;
+  struct Nodo* first, *last, *tmp;
+    if (patron==1){
+      for (i = 0; i < 192; i++) {
+        p[i]=pat[i];
+      }
+    }
+    if (patron==2){
+      for (i = 0; i < 192; i++) {
+        p[i]=pat2[i];
+      }
+    }
+    if (patron==3){
+      for (i = 0; i < 192; i++) {
+        p[i]=pat3[i];
+      }
+    }
+
+    first = (struct Nodo*) malloc (sizeof (struct Nodo));
+    if (first == NULL)
+    {
+	     quit();
+	     fprintf (stderr, "e: NO queda memoria.\n");
+	     exit (2);
+    }
+    if (oldclr == newclr)
+    {
+      free (first);
+      return;
+    }
+
+    first->x = x;
+    first->y = y;
+    first->next = NULL;
+    last = first;
+
+    while (first != NULL)
+    {
+      nx=x%12;
+      ny=y%16;
+      if(patron!=0){
+        pixel(x,y,p[ny*12+nx]);
+      }else{
+        pixel (x, y, newclr);
+      }
+
+      if (getpixel (x, y-1) == oldclr)
+      {
+        if (patron!=0) {
+          nx=x%12;
+          ny=(y-1)%16;
+          pixel(x,y-1,p[ny*12+nx]);
+        }else{
+          pixel (x, y-1, newclr);
+        }
+        insert (x, y-1, &last);
+      }
+
+
+      if (getpixel (x, y+1) == oldclr)
+      {
+        if (patron!=0) {
+          nx=x%12;
+          ny=(y+1)%16;
+          pixel(x,y+1,p[ny*12+nx]);
+        }else{
+          pixel (x, y+1, newclr);
+        }
+        insert (x, y+1, &last);
+      }
+
+      if (getpixel (x-1, y) == oldclr)
+      {
+        if (patron!=0) {
+          nx=(x-1)%12;
+          ny=y%16;
+          pixel(x-1,y,p[ny*12+nx]);
+        }else{
+          pixel (x-1, y, newclr);
+        }
+        insert (x-1, y, &last);
+      }
+
+      if (getpixel (x+1, y) == oldclr)
+      {
+        if (patron!=0) {
+          nx=(x+1)%12;
+          ny=y%16;
+          pixel(x+1,y,p[ny*12+nx]);
+        }else{
+          pixel (x+1, y, newclr);
+        }
+        insert (x+1, y, &last);
+      }
+
+      tmp = first;
+      first = first->next;
+      x = first->x;
+      y = first->y;
+      free (tmp);
+    }
 }

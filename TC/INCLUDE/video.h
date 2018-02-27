@@ -3,6 +3,7 @@ Rodrigo Alvarado - 16106
 Libreria grafica desarrollada en C
 21/02/2017*/
 
+int i,j;
 //Empieza el modo de video
 void modoVideo()
 {

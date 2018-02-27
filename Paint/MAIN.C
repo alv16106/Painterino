@@ -24,6 +24,12 @@ void main() {
 	mouse_limit();
 	mouseShow(20,20);
 	mouseHide(20,20);
+	for(i=755;i<790;i++){
+		for (j=470;j<505;j++) {
+			pixel(i,j,15);
+		}
+	}
+	floodFill2((755+790)/2,(470+505)/2,15,16,1);
 	while (s){
 		repaintMouse(&x,&y,&b,&x1,&y1);
 		if(b==1){
@@ -57,14 +63,25 @@ void main() {
 			if(x>710&&x<710+35&&y>20+225+135+45&&y<45+20+260+135)f=18;
 			if(x>710+45&&x<710+80&&y>20+225+135+45&&y<45+20+260+135)nuevo();
 			//
-			if(x>710&&x<710+35&&y>20+225+135+45+45&&y<45+20+260+45+135)f=20;
-			if(x>710+45&&x<710+80&&y>20+225+135+45+45&&y<45+20+260+45+135){
+			if(x>710&&x<710+35&&y>470&&y<505){
+				while (b==1) {
+					repaintMouse(&x,&y,&b,&x1,&y1);
+				}
+				g++;
+				if(g>3) g=1;
+			}
+			if(x>710+45&&x<710+80&&y>470&&y<505){
 				while (b==1) {
 					repaintMouse(&x,&y,&b,&x1,&y1);
 				}
 				p++;
 				if(p>3) p=0;
-				//rectangulo();
+				for(i=755;i<790;i++){
+					for (j=470;j<505;j++) {
+						pixel(i,j,15);
+					}
+				}
+				floodFill2((755+790)/2,(470+505)/2,15,16,p);
 			}
 
 			//Si esta en el canvas
@@ -99,7 +116,7 @@ void main() {
 						repaintMouse(&x,&y,&b,&x1,&y1);
 					}
 					rectangulo(xtemp, ytemp,x,y,color,g);
-					floodFill((x+xtemp)/2,(y+ytemp)/2,getpixel((x+xtemp)/2,(y+ytemp)/2),color+1,1);
+					floodFill((x+xtemp)/2,(y+ytemp)/2,getpixel((x+xtemp)/2,(y+ytemp)/2),color+1,p);
 					break;
 					//circulo
 					case 5:
@@ -118,7 +135,7 @@ void main() {
 						repaintMouse(&x,&y,&b,&x1,&y1);
 					}
 					circulo(xtemp, ytemp,(int)sqrt(abs(x-xtemp)*abs(x-xtemp)+abs(y-ytemp)*abs(y-ytemp)),color,g);
-					floodFill(xtemp, ytemp,getpixel(xtemp,ytemp),color,0);
+					floodFill(xtemp, ytemp,getpixel(xtemp,ytemp),color,p);
 					break;
 					//Elipse
 					case 7:
@@ -137,7 +154,7 @@ void main() {
 						repaintMouse(&x,&y,&b,&x1,&y1);
 					}
 					Elipse(xtemp, ytemp,abs(x-xtemp),abs(y-ytemp),color,g);
-					floodFill(xtemp, ytemp,getpixel(xtemp,ytemp),color,0);
+					floodFill(xtemp, ytemp,getpixel(xtemp,ytemp),color,p);
 					break;
 					//Poligono
 					case 9:
@@ -225,7 +242,7 @@ void main() {
 						repaintMouse(&x,&y,&b,&x1,&y1);
 					}
 					mouseHide(x,y);
-					floodFill(x,y,getpixel(x,y),color,0);
+					floodFill(x,y,getpixel(x,y),color,p);
 					mouseShow(x,y);
 					break;
 					//Marcador
@@ -255,6 +272,6 @@ void main() {
 			}
 		}
 	}
-	//guardar_imagen(0,0,200,200,"Prueba.bmp");
+	guardar_imagen(0,0,200,200,"Prueba.bmp");
 	quit();
 }
