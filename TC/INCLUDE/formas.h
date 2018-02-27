@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <string.h>
 
 /*Universidad del Valle de Guatemala
 Rodrigo Alvarado - 16106
@@ -70,6 +71,27 @@ static unsigned char pat3[Wpat * Hpat] =
   I,I,I,I,I,I,I,I,I,I,I,I,
   I,I,I,I,I,I,I,I,I,I,I,I
 };
+
+static unsigned char nopat[Wpat * Hpat] =
+{
+  7,7,7,7,7,7,7,7,7,7,7,7,
+  7,7,7,7,7,7,7,7,7,7,7,7,
+  7,7,7,7,7,7,7,7,7,7,7,7,
+  7,9,7,7,7,7,7,7,7,7,9,7,
+  7,7,9,7,7,7,7,7,7,9,7,7,
+  7,7,7,9,7,7,7,7,9,7,7,7,
+  7,7,7,7,9,7,7,9,7,7,7,7,
+  7,7,7,7,7,9,9,7,7,7,7,7,
+  7,7,7,7,7,9,9,7,7,7,7,7,
+  7,7,7,7,9,7,7,9,7,7,7,7,
+  7,7,7,9,7,7,7,7,9,7,7,7,
+  7,7,9,7,7,7,7,7,7,9,7,7,
+  7,9,7,7,7,7,7,7,7,7,9,7,
+  7,7,7,7,7,7,7,7,7,7,7,7,
+  7,7,7,7,7,7,7,7,7,7,7,7,
+  7,7,7,7,7,7,7,7,7,7,7,7,
+};
+
 int *portapapeles;
 int Hbuff=0, Wbuff=0;
 
@@ -412,6 +434,11 @@ void floodFill2(int x, int y, int oldclr, int newclr,int patron)
 {
   int nx,ny;
   struct Nodo* first, *last, *tmp;
+  if (patron==0){
+    for (i = 0; i < 192; i++) {
+      p[i]=nopat[i];
+    }
+  }
     if (patron==1){
       for (i = 0; i < 192; i++) {
         p[i]=pat[i];
@@ -450,7 +477,7 @@ void floodFill2(int x, int y, int oldclr, int newclr,int patron)
     {
       nx=x%12;
       ny=y%16;
-      if(patron!=0){
+      if(patron!=10){
         pixel(x,y,p[ny*12+nx]);
       }else{
         pixel (x, y, newclr);
@@ -458,7 +485,7 @@ void floodFill2(int x, int y, int oldclr, int newclr,int patron)
 
       if (getpixel (x, y-1) == oldclr)
       {
-        if (patron!=0) {
+        if (patron!=10) {
           nx=x%12;
           ny=(y-1)%16;
           pixel(x,y-1,p[ny*12+nx]);
@@ -471,7 +498,7 @@ void floodFill2(int x, int y, int oldclr, int newclr,int patron)
 
       if (getpixel (x, y+1) == oldclr)
       {
-        if (patron!=0) {
+        if (patron!=10) {
           nx=x%12;
           ny=(y+1)%16;
           pixel(x,y+1,p[ny*12+nx]);
@@ -483,7 +510,7 @@ void floodFill2(int x, int y, int oldclr, int newclr,int patron)
 
       if (getpixel (x-1, y) == oldclr)
       {
-        if (patron!=0) {
+        if (patron!=10) {
           nx=(x-1)%12;
           ny=y%16;
           pixel(x-1,y,p[ny*12+nx]);
@@ -495,7 +522,7 @@ void floodFill2(int x, int y, int oldclr, int newclr,int patron)
 
       if (getpixel (x+1, y) == oldclr)
       {
-        if (patron!=0) {
+        if (patron!=10) {
           nx=(x+1)%12;
           ny=y%16;
           pixel(x+1,y,p[ny*12+nx]);
@@ -511,4 +538,36 @@ void floodFill2(int x, int y, int oldclr, int newclr,int patron)
       y = first->y;
       free (tmp);
     }
+}
+
+void guardado(int p) {
+  char file[20], newname[40]="C:/guard/";
+  int ret;
+  guardar_imagen(0, 0, 700, 450, "C:/guard/temp.bmp");
+  quit();
+  printf ("Ingrese el nombre del archivo: ");
+  scanf ("%s", file);
+  strcat(newname,file);
+
+   ret = rename("C:/guard/temp.bmp", newname);
+
+   if(ret == 0) {
+      printf("Guardado exitoso");
+   } else {
+      printf("Error: No fue posible guardar el archivo");
+   }
+   getch();
+   modoVideo();
+   get_mouse();
+ 	canvas();
+ 	mouse_limit();
+ 	mouseShow(20,20);
+ 	mouseHide(20,20);
+  for(i=755;i<790;i++){
+    for (j=470;j<505;j++) {
+      pixel(i,j,15);
+    }
+  }
+  floodFill2((755+790)/2,(470+505)/2,15,16,p);
+  loadbitmap(710,20+45+360,"C:/Bitmaps/save.bmp");
 }

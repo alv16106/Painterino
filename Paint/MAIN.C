@@ -11,8 +11,8 @@ Programa de dibujo libre desarrollado en C
 
 #include "video.h"
 #include "mouse.h"
-#include "formas.h"
 #include "bitmap.h"
+#include "formas.h"
 
 void main() {
 	unsigned char color;
@@ -29,7 +29,7 @@ void main() {
 			pixel(i,j,15);
 		}
 	}
-	floodFill2((755+790)/2,(470+505)/2,15,16,1);
+	floodFill2((755+790)/2,(470+505)/2,15,16,0);
 	while (s){
 		repaintMouse(&x,&y,&b,&x1,&y1);
 		if(b==1){
@@ -60,7 +60,12 @@ void main() {
 			if(x>710&&x<710+35&&y>20+225+135&&y<20+260+135)f=17;
 			if(x>710+45&&x<710+80&&y>20+225+135&&y<20+260+135)s=0;
 			//
-			if(x>710&&x<710+35&&y>20+225+135+45&&y<45+20+260+135)f=18;
+			if(x>710&&x<710+35&&y>20+225+135+45&&y<45+20+260+135){
+				while (b==1) {
+					repaintMouse(&x,&y,&b,&x1,&y1);
+				}
+				guardado(p);
+			}
 			if(x>710+45&&x<710+80&&y>20+225+135+45&&y<45+20+260+135)nuevo();
 			//
 			if(x>710&&x<710+35&&y>470&&y<505){
@@ -70,18 +75,21 @@ void main() {
 				g++;
 				if(g>3) g=1;
 			}
+			//PATRONES
 			if(x>710+45&&x<710+80&&y>470&&y<505){
 				while (b==1) {
 					repaintMouse(&x,&y,&b,&x1,&y1);
 				}
 				p++;
 				if(p>3) p=0;
+				mouseHide(x,y);
 				for(i=755;i<790;i++){
 					for (j=470;j<505;j++) {
 						pixel(i,j,15);
 					}
 				}
 				floodFill2((755+790)/2,(470+505)/2,15,16,p);
+				mouseShow(x,y);
 			}
 
 			//Si esta en el canvas
@@ -91,7 +99,7 @@ void main() {
 					//Lapiz
 					case 1:
 					//putPixel(x,y,g,color);
-					if (abs(x-xtemp)<10)line(xtemp,ytemp,x,y,color,g);
+					if (abs(x-xtemp)<15&&abs(y-ytemp)<15)line(xtemp,ytemp,x,y,color,g);
 					xtemp=x;
 					ytemp=y;
 					break;
@@ -106,7 +114,9 @@ void main() {
 					while (b==1) {
 						repaintMouse(&x,&y,&b,&x1,&y1);
 					}
+					mouseHide(x,y);
 					rectangulo(xtemp, ytemp,x,y,color,g);
+					mouseShow(x,y);
 					break;
 					//rectangulo relleno
 					case 4:
@@ -115,8 +125,10 @@ void main() {
 					while (b==1) {
 						repaintMouse(&x,&y,&b,&x1,&y1);
 					}
+					mouseHide(x,y);
 					rectangulo(xtemp, ytemp,x,y,color,g);
 					floodFill((x+xtemp)/2,(y+ytemp)/2,getpixel((x+xtemp)/2,(y+ytemp)/2),color+1,p);
+					mouseShow(x,y);
 					break;
 					//circulo
 					case 5:
@@ -125,7 +137,9 @@ void main() {
 					while (b==1) {
 						repaintMouse(&x,&y,&b,&x1,&y1);
 					}
+					mouseHide(x,y);
 					circulo(xtemp, ytemp,(int)sqrt(abs(x-xtemp)*abs(x-xtemp)+abs(y-ytemp)*abs(y-ytemp)),color,g);
+					mouseShow(x,y);
 					break;
 					//circulo relleno
 					case 6:
@@ -134,8 +148,10 @@ void main() {
 					while (b==1) {
 						repaintMouse(&x,&y,&b,&x1,&y1);
 					}
+					mouseHide(x,y);
 					circulo(xtemp, ytemp,(int)sqrt(abs(x-xtemp)*abs(x-xtemp)+abs(y-ytemp)*abs(y-ytemp)),color,g);
 					floodFill(xtemp, ytemp,getpixel(xtemp,ytemp),color,p);
+					mouseShow(x,y);
 					break;
 					//Elipse
 					case 7:
@@ -144,7 +160,9 @@ void main() {
 					while (b==1) {
 						repaintMouse(&x,&y,&b,&x1,&y1);
 					}
+					mouseHide(x,y);
 					Elipse(xtemp, ytemp,abs(x-xtemp),abs(y-ytemp),color,g);
+					mouseShow(x,y);
 					break;
 					//Elipse llena
 					case 8:
@@ -153,8 +171,10 @@ void main() {
 					while (b==1) {
 						repaintMouse(&x,&y,&b,&x1,&y1);
 					}
+					mouseHide(x,y);
 					Elipse(xtemp, ytemp,abs(x-xtemp),abs(y-ytemp),color,g);
 					floodFill(xtemp, ytemp,getpixel(xtemp,ytemp),color,p);
+					mouseShow(x,y);
 					break;
 					//Poligono
 					case 9:
@@ -212,7 +232,9 @@ void main() {
 					while (b==1) {
 						repaintMouse(&x,&y,&b,&x1,&y1);
 					}
+					mouseHide(x,y);
 					copy(1,xtemp,ytemp,x,y);
+					mouseShow(x,y);
 					break;
 					//copy
 					case 13:
@@ -221,7 +243,9 @@ void main() {
 					while (b==1) {
 						repaintMouse(&x,&y,&b,&x1,&y1);
 					}
+					mouseHide(x,y);
 					copy(0,xtemp,ytemp,x,y);
+					mouseShow(x,y);
 					break;
 					//paste
 					case 14:
@@ -272,6 +296,5 @@ void main() {
 			}
 		}
 	}
-	guardar_imagen(0,0,200,200,"Prueba.bmp");
 	quit();
 }

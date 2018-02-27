@@ -12,7 +12,6 @@ int loadbitmap(int offX, int offY,char *archivo)
    int ch,ch1,ch2;
    ptr=fopen(archivo,"rb");      //open the bitmap file
    if(!ptr){
-     line(15,15,300,200,0,1);
      return 0;
    }             //if its not there return
    width=0;height=0;              //initialise wisth and height to zero
