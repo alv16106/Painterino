@@ -16,23 +16,30 @@ Programa de dibujo libre desarrollado en C
 
 void main() {
 	unsigned char color;
-	int x, y, x1, y1, b, s=1, f=1, term=1, xtemp, ytemp,g=2,i,j,iniciox,inicioy,p=0;
+	BITMAP bm;
+	int x, y, x1, y1, b, s=1, f=1, term=1, xtemp, ytemp,g=1,i,j,iniciox,inicioy,p=0;
 	color = 0;
+	//PREPARACIONES
 	modoVideo();
 	get_mouse();
 	canvas();
 	mouse_limit();
-	mouseShow(20,20);
-	mouseHide(20,20);
 	for(i=755;i<790;i++){
 		for (j=470;j<505;j++) {
 			pixel(i,j,15);
 		}
 	}
 	floodFill2((755+790)/2,(470+505)/2,15,16,0);
+	//Cargar la imagen de la utima vez que se abrio el paint
+	read(0,0,"C:/guard/ty.bmp",&bm);
+	mouseShow(20,20);
+	mouseHide(20,20);
+
+	//PROGRAMA
 	while (s){
 		repaintMouse(&x,&y,&b,&x1,&y1);
 		if(b==1){
+			//Si esta dentro del menu, se elige una opcion
 			if(x>710&&x<710+35&&y>20&&y<20+35)f=1;
 			if(x>710+45&&x<710+80&&y>20&&y<20+35)f=2;
 			//
@@ -60,6 +67,7 @@ void main() {
 			if(x>710&&x<710+35&&y>20+225+135&&y<20+260+135)f=17;
 			if(x>710+45&&x<710+80&&y>20+225+135&&y<20+260+135)s=0;
 			//
+			//GUARDADO DE BITMAPS
 			if(x>710&&x<710+35&&y>20+225+135+45&&y<45+20+260+135){
 				while (b==1) {
 					repaintMouse(&x,&y,&b,&x1,&y1);
@@ -68,6 +76,7 @@ void main() {
 			}
 			if(x>710+45&&x<710+80&&y>20+225+135+45&&y<45+20+260+135)nuevo();
 			//
+			//Cambiar el grosor de la linea
 			if(x>710&&x<710+35&&y>470&&y<505){
 				while (b==1) {
 					repaintMouse(&x,&y,&b,&x1,&y1);
@@ -127,7 +136,7 @@ void main() {
 					}
 					mouseHide(x,y);
 					rectangulo(xtemp, ytemp,x,y,color,g);
-					floodFill((x+xtemp)/2,(y+ytemp)/2,getpixel((x+xtemp)/2,(y+ytemp)/2),color+1,p);
+					floodFill((x+xtemp)/2,(y+ytemp)/2,getpixel((x+xtemp)/2,(y+ytemp)/2),color,p);
 					mouseShow(x,y);
 					break;
 					//circulo
@@ -288,13 +297,17 @@ void main() {
 				}
 			}
 		}else if (b==2) {
+			//Tomar color
 			color=getpixel(x,y);
-			for (i=730;i<770;i++){
-				for(j=570;j<590;j++){
+			//Pintar color elegido en un cuadro
+			for (i=710;i<790;i++){
+				for(j=520;j<580;j++){
 					pixel(i,j,color);
 				}
 			}
 		}
 	}
+	//Se guarda la imagen de lo ultimo que hubo en pantalla para que pueda ser cargado una vez vuelva a abrir el paitn
+	guardar_imagen(0, 0, 700, 450, "C:/guard/ty.bmp");
 	quit();
 }

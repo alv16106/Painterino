@@ -132,6 +132,7 @@ char getpixel(int x, int y){
 void canvas(){
 	int i,j,color,h;
 	color=0;
+	//CONTORNOS
 	for (i=0;i<700;i++){
 		for(j=0;j<450;j++){
 			pixel(i,j,15);
@@ -139,11 +140,16 @@ void canvas(){
 	}
 	for (i=700;i<800;i++){
 		for(j=0;j<600;j++){
-			pixel(i,j,0);
+			pixel(i,j,18);
+		}
+	}
+	for (i=0;i<800;i++){
+		for(j=450;j<600;j++){
+			pixel(i,j,18);
 		}
 	}
 
-	//COlores
+	//PALETA DE COLORES
 	for (i=0;i<700;i+=15){
 		for(j=467;j<517;j++){
 			pixel(i,j,color);
@@ -183,6 +189,7 @@ void canvas(){
 		}
 		color++;
 	}
+	//BOTONES DEL MENU
 	loadbitmap(710,20,"C:/Bitmaps/lapiz.bmp");
 	loadbitmap(710+45,20,"C:/Bitmaps/spray.bmp");
 	loadbitmap(710,20+45,"C:/Bitmaps/rect.bmp");

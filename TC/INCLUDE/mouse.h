@@ -16,6 +16,7 @@ Libreria para control del mouse desarrollada en C
 int** bufferMouse;
 //buffer=(int**)malloc(WMouse * HMouse * sizeof(int *));
 
+//Forma del mouse
 static unsigned char mouse[WMouse * HMouse] =
 {
   O,O,O,0,0,0,0,0,0,0,0,0,
@@ -36,6 +37,7 @@ static unsigned char mouse[WMouse * HMouse] =
   0,0,0,0,0,O,O,O,O,O,0,0
 };
 
+//Carga el driver del mouse
 void get_mouse()
 {
 	asm{
@@ -44,6 +46,7 @@ void get_mouse()
 	}
 }
 
+//Esconde el puntero en modo VGA
 void hide_mouse()
 {
 	asm{
@@ -52,6 +55,7 @@ void hide_mouse()
 	}
 }
 
+//Pone limites al movimiento del mouse
 void mouse_limit(){
 	asm{
 		mov ax, 7;
@@ -66,6 +70,7 @@ void mouse_limit(){
 	}
 }
 
+//Toma la posicion y boton presionado del mouse
 void GetMousePos( int *mbutton, int *mx, int *my )
 {
 	asm {
@@ -81,12 +86,11 @@ void GetMousePos( int *mbutton, int *mx, int *my )
 	}
 }
 
+//Muestra el mouse en pantalla
 void mouseShow(int x, int y) {
   int i,j;
   x=x+2;
   y=y+2;
-  //allocates memory and returns pointer to it
-  //receives size to allocate
   bufferMouse = malloc(sizeof(int) * WMouse);
   for (i= 0; i < WMouse; i++) {
     bufferMouse[i] = malloc(sizeof(int) * HMouse);
@@ -104,7 +108,7 @@ void mouseShow(int x, int y) {
   }
 }
 
-// Hides mouse from screen
+// Esconde el mouse de la pantalla
 void mouseHide(int x, int y) {
   int i,j;
   x=x+2;
@@ -118,6 +122,7 @@ void mouseHide(int x, int y) {
   free(bufferMouse);
 }
 
+//Si la posicion del mouse ha cambiado, se despinta de la posicion anterior y vuelve a pintarse en la nueva
 void repaintMouse(int *x, int *y, int *clicked, int *xtemp, int *ytemp) {
   GetMousePos(clicked,x, y);
   if (*xtemp != *x || *ytemp != *y) {
